@@ -1,0 +1,25 @@
+{
+    "Name": "Telefonia",
+    "Description": null,
+    "Sort": null,
+    "PadCategories_id": "c70e4454-f2d1-40cd-9f30-0842a01f9c3f",
+    "Path": "/Biomont/Telefonia",
+    "AppliesToIncidents": true,
+    "AppliesToProblems": true,
+    "AppliesToRFCs": true,
+    "AppliesToKB": true,
+    "Inactive": false,
+    "Id": "1ca0fc27-126b-4beb-b97b-044759c48539",
+    "Links": [
+      {
+        "Rel": "self",
+        "Href": "https://celsoalexdiaz.proactivanet.com/panet/api/categories/1ca0fc27-126b-4beb-b97b-044759c48539",
+        "Action": "GET"
+      },
+      {
+        "Rel": "parent",
+        "Href": "https://celsoalexdiaz.proactivanet.com/panet/api/categories/c70e4454-f2d1-40cd-9f30-0842a01f9c3f",
+        "Action": "GET"
+      }
+    ]
+  }
