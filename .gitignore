@@ -1,0 +1,95 @@
+# Python
+*.py[cod]
+*.pyo
+*.pyd
+__pycache__/
+*.so
+
+# Archivos de configuración del entorno virtual
+.env
+.venv
+ENV/
+env/
+venv/
+env.bak/
+venv.bak/
+
+# Editor de configuración
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Distribución / empaquetado
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Archivos de caché de pip
+pip-log.txt
+pip-delete-this-directory.txt
+
+# PyInstaller
+#  Nota: Esto también podría ignorar archivos de PyInstaller que no son propios de Python
+*.manifest
+*.spec
+
+# Coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+# Archivos de depuración
+*.log
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# celery beat schedule file
+celerybeat-schedule
+
+# SageMath parsed files
+*.sage.py
+
+# mypy
+.mypy_cache/
+
+# pyright
+.pyright/
+
+data/
+excel/
+
+*.json
+main.py
+
+.env

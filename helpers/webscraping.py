@@ -13,7 +13,6 @@ class ScrapingProactiva:
         
         self.driver.get(url=self.url_base)
 
-
     
     def login(self,user,password):
 
@@ -78,14 +77,3 @@ class ScrapingProactiva:
             ValueError(e)
 
 
-
-
-
-#pawMenuTabFrame
-#<td class="pawWebAppMenuTabOptionTd1">Administración</td>
-#/html/body/div[1]/table[12]/tbody/tr/td[2] 
-#//*[@id="mop3"]/tbody/tr/td[2]
-
-
-#id="treeCustomFieldsIncidents"
-# /html/body/div[1]/table/tbody/tr[2]/td/div/div/div/div/div[3]/div[2]/div[1]/div[2]/div[1]/div[1]/span[1]/img[3]
