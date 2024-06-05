@@ -34,6 +34,9 @@ class ScrapingProactiva:
                 button_session = self.driver.find_element(By.ID,"theSubmitBtn")
                 button_session.click()
 
+                button_acces = self.driver.find_element(By.ID,"imgServiceDesk")
+                button_acces.click()
+
 
                 bucle = False
 

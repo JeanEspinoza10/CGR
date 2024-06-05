@@ -73,11 +73,18 @@ def categorias():
     except Exception as e :
         return jsonify({"error": str(e)})
 
-
+post_path ='/webhook'
+@app.route(post_path, methods=['POST','GET'])
+def webhook():
+    try:
+        data = request.get_json()
+        return jsonify(data)
+    except Exception as e:
+        return jsonify('Error en webhook')
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
 
 
 
