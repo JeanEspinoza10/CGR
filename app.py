@@ -2,8 +2,11 @@ from flask import Flask
 from flask import  request, jsonify
 from controller.webScrapn import agregarCP,modificarCP
 from helpers.categories import Categories
+from flask_cors import CORS
+
 
 app = Flask(__name__)
+CORS(app)
 
 
 post_path = '/campos_personalizados/agregar'
