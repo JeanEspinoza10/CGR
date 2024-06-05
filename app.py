@@ -93,7 +93,7 @@ def webhook():
 
         # Guardar los datos en un archivo local
         nombre_archivo = 'datos.json'
-        ruta_guardado = os.path.join('/ruta/a/tu/carpeta/local', nombre_archivo)
+        ruta_guardado = os.path.join('./', nombre_archivo)
 
         with open(ruta_guardado, 'w') as f:
             json.dump(data, f, indent=4)
