@@ -3,6 +3,8 @@ from flask import  request, jsonify
 from controller.webScrapn import agregarCP,modificarCP
 from helpers.categories import Categories
 from flask_cors import CORS
+import os
+import json
 
 
 app = Flask(__name__)
@@ -85,7 +87,20 @@ post_path ='/webhook'
 def webhook():
     try:
         data = request.get_json()
-        return jsonify(data)
+        # Verificar si se recibieron datos JSON
+        if not data:
+            return jsonify({'error': 'No se recibieron datos JSON'}), 400
+
+        # Guardar los datos en un archivo local
+        nombre_archivo = 'datos.json'
+        ruta_guardado = os.path.join('/ruta/a/tu/carpeta/local', nombre_archivo)
+
+        with open(ruta_guardado, 'w') as f:
+            json.dump(data, f, indent=4)
+
+        return jsonify({'message': 'Datos guardados correctamente'}), 200
+
+
     except Exception as e:
         return jsonify('Error en webhook')
 
