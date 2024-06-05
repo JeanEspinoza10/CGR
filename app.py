@@ -5,7 +5,7 @@ from helpers.categories import Categories
 from flask_cors import CORS
 import os
 import json
-
+import requests
 
 app = Flask(__name__)
 CORS(app)
@@ -86,17 +86,34 @@ post_path ='/webhook'
 @app.route(post_path, methods=['POST','GET'])
 def webhook():
     try:
+        
         data = request.get_json()
-        # Verificar si se recibieron datos JSON
-        if not data:
-            return jsonify({'error': 'No se recibieron datos JSON'}), 400
 
-        # Guardar los datos en un archivo local
-        nombre_archivo = 'datos.json'
-        ruta_guardado = os.path.join('./', nombre_archivo)
 
-        with open(ruta_guardado, 'w') as f:
-            json.dump(data, f, indent=4)
+
+        url = f'https://celsoalexdiaz.proactivanet.com/panet/api/Incidents/{data["Id"]}/customFields/3454d179-bf74-47a4-bfbe-0a9ed77f0543'
+
+        headers = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqZWFuLmVzcGlub3phQHNvbHV0aW9udGVjaC5jb20ucGUiLCJvdnIiOiJmYWxzZSIsImF1dCI6IjAiLCJuYmYiOjE3MTcwNDU2ODMsImV4cCI6MTc0ODU4MTY4MywiaWF0IjoxNzE3MDQ1NjgzLCJpc3MiOiJwcm9hY3RpdmFuZXQiLCJhdWQiOiJhcGkifQ.QAUcqs1DJjBcQW59diOINBWvndnZob3-KS-2t2F9ahA',
+            'Accept-Language': 'es'
+        }
+
+        data = {
+            'Value': '2'
+        }
+
+        # Realizar la solicitud PUT
+        response = requests.put(url, headers=headers, json=data)
+
+        # Verificar el código de respuesta
+        if response.status_code == 200:
+            print('Datos actualizados exitosamente.')
+        else:
+            print(f'Error al actualizar datos. Código de estado: {response.status_code}')
+            print(response.text)  # Mostrar la respuesta del servidor en caso de error
+
 
         return jsonify({'message': 'Datos guardados correctamente'}), 200
 
