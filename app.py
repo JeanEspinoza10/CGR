@@ -9,6 +9,10 @@ app = Flask(__name__)
 CORS(app)
 
 
+@app.route('/')
+def hello():
+    return "Hello, World!"
+
 post_path = '/campos_personalizados/agregar'
 @app.route(post_path, methods=['POST'])
 def usuarios_post():
