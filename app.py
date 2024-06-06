@@ -13,7 +13,7 @@ CORS(app)
 
 @app.route('/')
 def hello():
-    return "TE AMO RENOEGONA"
+    return "Healtcheck"
 
 post_path = '/campos_personalizados/agregar'
 @app.route(post_path, methods=['POST'])
