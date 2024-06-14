@@ -182,6 +182,22 @@ def guardar():
         json.dump(data, archivo, indent=4)
 
     return jsonify({'message': 'Datos guardados correctamente'}), 200 
+
+post_path = '/post'
+@app.route(post_path, methods=['POST'])
+def borrar():
+    # Ruta al archivo JSON en el directorio actual
+    ruta_archivo = './informacion.json'
+
+    # Crear un JSON vacío
+    datos_vacios = {}
+
+    # Escribir el JSON vacío al archivo
+    with open(ruta_archivo, 'w') as archivo:
+        json.dump(datos_vacios, archivo)
+
+    return jsonify({'message': 'Datos guardados correctamente'}), 200 
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
 
