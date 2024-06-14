@@ -7,25 +7,26 @@ from selenium.webdriver.common.by import By
 
 
 def obtenerNumero(name):
-    url = 'https://caupruebas.contraloria.gob.pe/proactivanet/api/CustomFields'
+    url = 'https://celsoalexdiaz.proactivanet.com/panet/api/CustomFields'
     params = {
         'Name': name,
         '$fields': 'ListValues,ListViews,Name'
     }
     headers = {
         'Accept': 'application/json',
-        'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjb250cmFsb3JpYVxcNjM4NDAiLCJvdnIiOiJmYWxzZSIsImF1dCI6IjAiLCJuYmYiOjE3MTY1MDA2ODIsImV4cCI6MTc0ODAzNjY4MiwiaWF0IjoxNzE2NTAwNjgyLCJpc3MiOiJwcm9hY3RpdmFuZXQiLCJhdWQiOiJhcGkifQ.2um3vqo5zhErZzNg0Ew47-sHxEc4QflhEOOjds_vBAc',
+        'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqZWFuLmVzcGlub3phQHNvbHV0aW9udGVjaC5jb20ucGUiLCJvdnIiOiJmYWxzZSIsImF1dCI6IjAiLCJuYmYiOjE3MTcwNDU2ODMsImV4cCI6MTc0ODU4MTY4MywiaWF0IjoxNzE3MDQ1NjgzLCJpc3MiOiJwcm9hY3RpdmFuZXQiLCJhdWQiOiJhcGkifQ.QAUcqs1DJjBcQW59diOINBWvndnZob3-KS-2t2F9ahA',
         'Accept-Language': 'es'
     }
 
     try:
         # Realizar la solicitud GET
-        response = requests.get(url, params=params, headers=headers)
-
+        
+        response = requests.get(url=url, params=params, headers=headers)
+        
         # Verificar si la solicitud fue exitosa
         if response.status_code == 200:
             data = response.json()
-
+            
 
             list_values = data[0]['ListValues']
             
@@ -49,7 +50,7 @@ def obtenerNumero(name):
                     print(f'Error en la solicitud: {response.status_code}')
 
     except requests.exceptions.RequestException as e:
-        print(f'Error de conexión: {e}')
+        print(f'Error de conexión Obtener numero: {e}')
 
 
 def agregarCP(name,valor):
@@ -63,11 +64,11 @@ def agregarCP(name,valor):
     orden = obtenerNumero(name=name)
 
     
-    web_driver = ScrapingProactiva("https://caupruebas.contraloria.gob.pe/proactivanet/library/loginform/default.paw?pawLoginFormSrcUrl=%2fproactivanet%2fdefault.paw&pawLoginFormStatus=1&pawLoginFormSec=0")
+    web_driver = ScrapingProactiva("https://celsoalexdiaz.proactivanet.com/panet/library/loginform/default.paw?pawLoginFormSrcUrl=%2fpanet%2fdefault.paw&pawLoginFormStatus=1&pawLoginFormSec=0")
 
 
 
-    web_driver.login(user="CONTRALORIA\\63840",password="1q2w3e4r5tABC")
+    web_driver.login(user="jean.espinoza@solutiontech.com.pe",password="jean.espinoza@solutiontech.com.pe")
 
 
     # Obtener todas las cookies después del inicio de sesión
@@ -165,11 +166,11 @@ def modificarCP(name,buscar_element):
 
     '''
 
-    web_driver = ScrapingProactiva("https://caupruebas.contraloria.gob.pe/proactivanet/library/loginform/default.paw?pawLoginFormSrcUrl=%2fproactivanet%2fdefault.paw&pawLoginFormStatus=1&pawLoginFormSec=0")
+    web_driver = ScrapingProactiva("https://celsoalexdiaz.proactivanet.com/panet/library/loginform/default.paw?pawLoginFormSrcUrl=%2fpanet%2fdefault.paw&pawLoginFormStatus=1&pawLoginFormSec=0")
 
 
 
-    web_driver.login(user="CONTRALORIA\\63840",password="1q2w3e4r5tABC")
+    web_driver.login(user="jean.espinoza@solutiontech.com.pe",password="jean.espinoza@solutiontech.com.pe")
 
     # Obtener todas las cookies después del inicio de sesión
     cookies = web_driver.driver.get_cookies()
