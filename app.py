@@ -88,7 +88,7 @@ def webhook():
     try:
         
         data = request.get_json()
-
+    
 
         # Obtenemos el nombre de la aplicacion:
         url = f'https://caupruebas.contraloria.gob.pe/proactivanet/api/Incidents/{data["Id"]}'
@@ -102,7 +102,7 @@ def webhook():
         }
 
         try:
-            response = requests.get(url, params=params, headers=headers)
+            response = requests.get(url, params=params, headers=headers,verify=False)
             response.raise_for_status()  # Verifica si la solicitud fue exitosa
 
             # Si la solicitud fue exitosa, imprime el contenido de la respuesta
@@ -117,7 +117,7 @@ def webhook():
             "Id": categoria_id
         }
 
-        response = requests.get(url, params=params, headers=headers)
+        response = requests.get(url, params=params, headers=headers,verify=False)
         response.raise_for_status()  # Verifica si la solicitud fue exitosa
 
         # Si la solicitud fue exitosa, imprime el contenido de la respuesta
@@ -144,7 +144,7 @@ def webhook():
             
 
         # Realizar la solicitud PUT
-        response = requests.put(url, headers=headers, json=data)
+        response = requests.put(url, headers=headers, json=data,verify=False)
 
         # Verificar el código de respuesta
         if response.status_code == 200:
