@@ -6,7 +6,9 @@ from flask_cors import CORS
 import os
 import json
 import requests
+import urllib3
 
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 app = Flask(__name__)
 CORS(app)
 
@@ -88,7 +90,8 @@ def webhook():
     try:
         
         data = request.get_json()
-    
+
+        print(data)
 
         # Obtenemos el nombre de la aplicacion:
         url = f'https://caupruebas.contraloria.gob.pe/proactivanet/api/Incidents/{data["Id"]}'
@@ -101,14 +104,10 @@ def webhook():
             'Accept-Language': 'es'
         }
 
-        try:
-            response = requests.get(url, params=params, headers=headers,verify=False)
-            response.raise_for_status()  # Verifica si la solicitud fue exitosa
+        response = requests.get(url, params=params, headers=headers, verify=False)
+        categoria_id = response.json()["PadCategories_id"]
 
-            # Si la solicitud fue exitosa, imprime el contenido de la respuesta
-            categoria_id = response.json()["PadCategories_id"]
-        except requests.exceptions.RequestException as e:
-            print(f"Error al hacer la solicitud: {e}")
+    
 
         # Obtenemos el nombre de la categoria
 
@@ -117,15 +116,12 @@ def webhook():
             "Id": categoria_id
         }
 
-        response = requests.get(url, params=params, headers=headers,verify=False)
-        response.raise_for_status()  # Verifica si la solicitud fue exitosa
+        response = requests.get(url, params=params, headers=headers, verify=False)
 
         # Si la solicitud fue exitosa, imprime el contenido de la respuesta
-        name_categoria = response.json()["Name"]
+        name_categoria = response.json()[0]["Name"]
 
-
-        # Nombre de categoria añadimos
-
+        
 
         url = f'https://caupruebas.contraloria.gob.pe/proactivanet/api/Incidents/{data["Id"]}/customFields'
         
@@ -138,27 +134,31 @@ def webhook():
         data = [
             {
                 "CustomField_id": "D7193D42-5FCE-4180-A77A-82E82774AE0C",
-                "Value": f"{name_categoria} / nombre de especialista"
+                "Value": f"{name_categoria} / Analista especialista(dinamico)"
             }
         ]
             
 
         # Realizar la solicitud PUT
         response = requests.put(url, headers=headers, json=data,verify=False)
+        
+        data = [
+            {
+                "CustomField_id": "B6BB775C-73C4-4686-91DD-926A5E9CFA2B",
+                "Value": f"{name_categoria} / Lider especialista(dinamico)"
+            }
+        ]
 
-        # Verificar el código de respuesta
-        if response.status_code == 200:
-            print('Datos actualizados exitosamente.')
-        else:
-            print(f'Error al actualizar datos. Código de estado: {response.status_code}')
-            print(response.text)  # Mostrar la respuesta del servidor en caso de error
+        response = requests.put(url, headers=headers, json=data,verify=False)
+
+
 
 
         return jsonify({'message': 'Datos guardados correctamente'}), 200
 
 
     except Exception as e:
-        return jsonify('Error en webhook')
+        return jsonify('Error en webhook', e)
 
 
 if __name__ == '__main__':
