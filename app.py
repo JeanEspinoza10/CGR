@@ -160,7 +160,19 @@ def webhook():
     except Exception as e:
         return jsonify('Error en webhook', e)
 
+post_path = '/v1/webhok/'
+@app.route(post_path, methods=['POST','GET'])
+def guardar():
+    data = request.get_json()
+    
+    # Nombre y ruta del archivo donde guardar el JSON
+    nombre_archivo = "./informacion.json"
 
+    # Guardar el diccionario como JSON en el archivo
+    with open(nombre_archivo, 'w') as archivo:
+        json.dump(data, archivo, indent=4)
+
+    return jsonify({'message': 'Datos guardados correctamente'}), 200 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
 
