@@ -84,14 +84,23 @@ def categorias():
     except Exception as e :
         return jsonify({"error": str(e)})
 
-post_path ='/webhook'
-@app.route(post_path, methods=['POST','GET'])
+
+post_path ='/get'
+@app.route(post_path, methods=['GET'])
 def webhook():
     try:
-        
-        data = request.get_json()
+        # Ruta al archivo JSON en el directorio actual
+        ruta_archivo = './informacion.json'
 
-        print(data)
+        # Abrir y leer el archivo JSON
+        with open(ruta_archivo, 'r') as archivo:
+            datos = json.load(archivo)
+                
+       
+
+        return jsonify(datos)
+
+        data = request.get_json()
 
         # Obtenemos el nombre de la aplicacion:
         url = f'https://caupruebas.contraloria.gob.pe/proactivanet/api/Incidents/{data["Id"]}'
