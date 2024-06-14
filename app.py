@@ -90,19 +90,58 @@ def webhook():
         data = request.get_json()
 
 
-
-        url = f'https://celsoalexdiaz.proactivanet.com/panet/api/Incidents/{data["Id"]}/customFields/3454d179-bf74-47a4-bfbe-0a9ed77f0543'
-
+        # Obtenemos el nombre de la aplicacion:
+        url = f'https://caupruebas.contraloria.gob.pe/proactivanet/api/Incidents/{data["Id"]}'
+        params = {
+            "$fields": "PadCategories_id"
+        }
         headers = {
-            'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqZWFuLmVzcGlub3phQHNvbHV0aW9udGVjaC5jb20ucGUiLCJvdnIiOiJmYWxzZSIsImF1dCI6IjAiLCJuYmYiOjE3MTcwNDU2ODMsImV4cCI6MTc0ODU4MTY4MywiaWF0IjoxNzE3MDQ1NjgzLCJpc3MiOiJwcm9hY3RpdmFuZXQiLCJhdWQiOiJhcGkifQ.QAUcqs1DJjBcQW59diOINBWvndnZob3-KS-2t2F9ahA',
+            'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjb250cmFsb3JpYVxcNjM4NDAiLCJvdnIiOiJmYWxzZSIsImF1dCI6IjAiLCJuYmYiOjE3MTgzNzYyOTYsImV4cCI6MTc0OTkxMjI5NiwiaWF0IjoxNzE4Mzc2Mjk2LCJpc3MiOiJwcm9hY3RpdmFuZXQiLCJhdWQiOiJhcGkifQ.kABrjG2Zf1LsEOjO2LnOR2IqlY0bmq-N7LkbFo9KTg4',
             'Accept-Language': 'es'
         }
 
-        data = {
-            'Value': '2'
+        try:
+            response = requests.get(url, params=params, headers=headers)
+            response.raise_for_status()  # Verifica si la solicitud fue exitosa
+
+            # Si la solicitud fue exitosa, imprime el contenido de la respuesta
+            categoria_id = response.json()["PadCategories_id"]
+        except requests.exceptions.RequestException as e:
+            print(f"Error al hacer la solicitud: {e}")
+
+        # Obtenemos el nombre de la categoria
+
+        url = "https://caupruebas.contraloria.gob.pe/proactivanet/api/Categories"
+        params = {
+            "Id": categoria_id
         }
+
+        response = requests.get(url, params=params, headers=headers)
+        response.raise_for_status()  # Verifica si la solicitud fue exitosa
+
+        # Si la solicitud fue exitosa, imprime el contenido de la respuesta
+        name_categoria = response.json()["Name"]
+
+
+        # Nombre de categoria añadimos
+
+
+        url = f'https://caupruebas.contraloria.gob.pe/proactivanet/api/Incidents/{data["Id"]}/customFields'
+        
+        headers = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjb250cmFsb3JpYVxcNjM4NDAiLCJvdnIiOiJmYWxzZSIsImF1dCI6IjAiLCJuYmYiOjE3MTgzNzYyOTYsImV4cCI6MTc0OTkxMjI5NiwiaWF0IjoxNzE4Mzc2Mjk2LCJpc3MiOiJwcm9hY3RpdmFuZXQiLCJhdWQiOiJhcGkifQ.kABrjG2Zf1LsEOjO2LnOR2IqlY0bmq-N7LkbFo9KTg4',
+            'Accept-Language': 'es'
+        }
+        data = [
+            {
+                "CustomField_id": "D7193D42-5FCE-4180-A77A-82E82774AE0C",
+                "Value": f"{name_categoria} / nombre de especialista"
+            }
+        ]
+            
 
         # Realizar la solicitud PUT
         response = requests.put(url, headers=headers, json=data)
